@@ -10,7 +10,13 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.MapPost("/forward", async ([FromForm] IFormFile file) => {
-   return "sent";
+    var payload = new StreamContent(file.OpenReadStream());
+    using (var client = new HttpClient())
+    {
+        var response = await client.PostAsync("http://sebug.local/", payload);
+        string responseString = await response.Content.ReadAsStringAsync();
+        return responseString;
+    }
 }).DisableAntiforgery();
 
 app.Run();
