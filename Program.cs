@@ -3,6 +3,8 @@ var app = builder.Build();
 
 app.Urls.Add("https://localhost:3000");
 
-app.MapGet("/", () => "Hello World!");
+app.UseDefaultFiles();
+
+app.UseStaticFiles();
 
 app.Run();
