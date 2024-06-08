@@ -36,7 +36,8 @@ button.onclick = function() {
   }
   transformCtx.putImageData(imageData, 0, 0);
 
-  console.log(grayScale);
+  let b64 = btoa(String.fromCharCode(...grayScale));
+  console.log(b64);
 
   let ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
