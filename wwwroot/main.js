@@ -12,7 +12,7 @@ function RGBToGrayScale(red,green,blue) {
 }  
 
 const button = document.querySelector('button');
-button.onclick = function() {
+button.onclick = async function() {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   let transformCanvas = document.createElement('canvas');
@@ -36,8 +36,17 @@ button.onclick = function() {
   }
   transformCtx.putImageData(imageData, 0, 0);
 
-  let b64 = btoa(String.fromCharCode(...grayScale));
-  console.log(b64);
+  const blob = new Blob([grayScale]);
+
+  console.log(blob);
+
+  const formData = new FormData();
+  formData.append("file", blob);
+
+  const response = await fetch('/forward', {
+    method: 'POST',
+    body: formData
+  });
 
   let ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
