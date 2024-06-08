@@ -23,6 +23,7 @@ button.onclick = function() {
 
   let imageData = transformCtx.getImageData(0, 0, transformCanvas.width, transformCanvas.height);
   const pixels = imageData.data;
+  let grayScale = new Uint8Array(transformCanvas.width * transformCanvas.height);
   for (var i = 0; i < pixels.length; i += 4) {
 
     let lightness = parseInt((pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3);
@@ -30,8 +31,12 @@ button.onclick = function() {
     pixels[i] = lightness;
     pixels[i + 1] = lightness;
     pixels[i + 2] = lightness;
+
+    grayScale[i / 4] = lightness;
   }
   transformCtx.putImageData(imageData, 0, 0);
+
+  console.log(grayScale);
 
   let ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
